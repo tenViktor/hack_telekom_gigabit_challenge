@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Pentest</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f7;
+        }
+
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            background-color: #f1f3f5;
+            border-radius: 5px;
+            margin-right: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .tab:hover {
+            background-color: #e0e0e0;
+        }
+
+        #deploy {
+            background-color: #d63384;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #deploy:hover {
+            background-color: #c3175b;
+        }
+
+        input {
+            width: 93%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .button-row button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-row button:first-child {
+            background-color: white;
+            border: 2px solid #1e293b;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab">New</div>
+            <div class="tab">History</div>
+        </div>
+        <h2>Create pentest</h2>
+        <p>Create your penetration test in one click</p>
+        <input type="text" placeholder="Name of your test" width="100px" />
+        <input type="url" placeholder="host address" width="100px" />
+        <input type="file" placeholder="vulnerability csv" width="100px" />
+        <div class="button-row">
+            <button>Cancel</button>
+            <button id="deploy">Deploy</button>
+        </div>
+    </div>
+
+</body>
+</html>
