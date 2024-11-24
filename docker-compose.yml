@@ -26,6 +26,7 @@ services:
       - ./data:/data
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - TRANSFORMERS_CACHE=/data/model_cache
       - DATABASE_URL=sqlite:////data/sqlite/app.db
 
 volumes:

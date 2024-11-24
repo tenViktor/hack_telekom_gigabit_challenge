@@ -26,11 +26,15 @@ TODO:
 - create the Devpost
 - create slides
 
-Requirements.txt:
+## Requirements.txt
+
 pandas
 playwright
 faiss-cpu
 langchain-community
+transformers
+torch
+httpx
 sqlalchemy
 fastapi
 sqlmap-api
@@ -50,8 +54,8 @@ _Some SQL Injection variants_
 
 ## Needs specialized packages
 
-sqlmap-api _(SQL Injection)_
-cryptography _(Crypto failures)_
-requests _(API testing)_
-beautifulsoup4 _(HTML parsing)_
-owasp-zap-api _(For deeper scanning)_
+_sqlmap-api (SQL Injection)_
+_cryptography (Crypto failures)_
+_requests (API testing)_
+_beautifulsoup4 (HTML parsing)_
+_owasp-zap-api (For deeper scanning)_
