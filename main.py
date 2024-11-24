@@ -157,46 +157,6 @@ class VulnerabilityScanner:
                 style="blue",
             )
 
-        try:
-            if can_use_playwright:
-                console.print(
-                    "Generating and running Playwright test...", style="yellow"
-                )
-                script = await self.script_generator.generate_test_script(
-                    vulnerability, details, vuln_type.value
-                )
-                results = await self.run_generated_script(script, vulnerability)
-            else:
-                console.print("Manual testing required", style="red")
-                results = {
-                    "success": False,
-                    "status": "manual_testing_required",
-                    "reason": "No automated test available",
-                }
-
-            # Save results
-            await self.save_results(vulnerability, results)
-
-            # Display results in CLI
-            if results.get("success"):
-                console.print("✅ Vulnerability CONFIRMED!", style="green")
-                if results.get("evidence"):
-                    console.print("\nEvidence:", style="yellow")
-                    for evidence in results["evidence"]:
-                        console.print(f"- {evidence}")
-            else:
-                console.print("❌ Vulnerability not confirmed", style="red bold")
-
-            if results.get("screenshots"):
-                console.print(
-                    f"\nScreenshots saved: {len(results['screenshots'])}", style="blue"
-                )
-
-        except Exception as e:
-            console.print(f"Error during test execution: {str(e)}", style="red")
-            results = {"status": "error", "error": str(e)}
-            await self.save_results(vulnerability, results)
-
     async def run_generated_script(self, script_content: str, vulnerability: str):
         async with async_playwright() as p:
             browser = await p.chromium.launch(headless=True)
