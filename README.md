@@ -2,21 +2,6 @@
 
 A containerized CLI tool for automated vulnerability scanning and exploitation. The tool processes vulnerability scan results and automatically performs security testing using browser automation and specialized exploits.
 
-## Quick Start
-
-```bash
-# Pull the image
-docker pull yourusername/vuln-scanner:latest
-
-# Run the scanner
-docker run \
-    -e OPENAI_API_KEY="your-api-key-here" \
-    -v $(pwd)/data:/app/data \
-    -v $(pwd)/results:/app/results \
-    vuln-scanner \
-    "http://target-url:3000" "/app/data/vulnerabilities.csv"
-```
-
 ## Features
 
 - Automated vulnerability classification based on OWASP Top 10
