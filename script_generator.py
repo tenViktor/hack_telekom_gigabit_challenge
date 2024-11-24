@@ -48,6 +48,123 @@ async def main():
 """
 
         vuln_specific_prompts = {
+            "broken_auth": {
+                "context": """
+Common authentication test points:
+- Password reset functionality
+- Session handling
+- Remember me functionality
+- Account lockout
+- Registration process
+- Token handling
+
+Common authentication tests:
+- Brute force attempts
+- Password policy bypass
+- Session fixation
+- Token predictability
+- Account enumeration
+- Password reset poisoning
+""",
+                "example": """
+        # Test password reset functionality
+        await page.goto(f"{TARGET_URL}/forgot-password")
+        results["steps_to_reproduce"].append("1. Navigate to password reset page")
+        results["screenshots"].append(
+            await take_screenshot(page, "password_reset_page", results_dir)
+        )
+        
+        # Test account enumeration
+        test_emails = ["admin@example.com", "nonexistent@example.com"]
+        for email in test_emails:
+            results["steps_to_reproduce"].append(f"2. Testing password reset with: {email}")
+            await page.fill('input[type="email"]', email)
+            
+            # Capture the response time
+            start_time = time.time()
+            await page.click('button[type="submit"]')
+            await page.wait_for_load_state("networkidle")
+            response_time = time.time() - start_time
+            
+            results["screenshots"].append(
+                await take_screenshot(page, f"reset_response_{email.split('@')[0]}", results_dir)
+            )
+            
+            # Check for timing differences or revealing messages
+            page_content = await page.content()
+            if "user found" in page_content.lower() or response_time > 2:
+                results["success"] = True
+                results["evidence"].append(f"Account enumeration possible with email: {email}")
+                results["evidence"].append(f"Response time: {response_time:.2f}s")
+""",
+            },
+            "security_misconfig": {
+                "context": """
+Common security misconfiguration test points:
+- Default credentials
+- Error messages
+- Directory listing
+- Security headers
+- Debug/dev endpoints
+- Backup files
+- Admin interfaces
+
+Common misconfiguration tests:
+- Check for verbose errors
+- Test default credentials
+- Scan for common paths
+- Verify security headers
+- Check for exposed config files
+- Test for debug endpoints
+""",
+                "example": """
+        # Test for common misconfigurations
+        sensitive_paths = [
+            "/admin",
+            "/phpinfo.php",
+            "/config",
+            "/.env",
+            "/backup",
+            "/api/debug",
+            "/swagger",
+            "/actuator"
+        ]
+        
+        for path in sensitive_paths:
+            results["steps_to_reproduce"].append(f"1. Testing path: {path}")
+            full_url = f"{TARGET_URL}{path}"
+            
+            response = await page.goto(full_url)
+            status = response.status if response else 404
+            
+            results["screenshots"].append(
+                await take_screenshot(page, f"path_test_{path.replace('/', '_')}", results_dir)
+            )
+            
+            # Check response status and content
+            if status < 400:
+                page_content = await page.content()
+                if any(term in page_content.lower() for term in ["admin", "config", "debug", "error"]):
+                    results["success"] = True
+                    results["evidence"].append(f"Sensitive path accessible: {path}")
+                    results["evidence"].append(f"Status code: {status}")
+        
+        # Test for security headers
+        response = await page.goto(TARGET_URL)
+        headers = response.headers if response else {}
+        required_headers = [
+            "X-Frame-Options",
+            "X-Content-Type-Options",
+            "Strict-Transport-Security",
+            "Content-Security-Policy"
+        ]
+        
+        for header in required_headers:
+            if header not in headers:
+                results["success"] = True
+                results["evidence"].append(f"Missing security header: {header}")
+""",
+            },
             "sql_injection": {
                 "context": """
 Common SQL injection test points:
