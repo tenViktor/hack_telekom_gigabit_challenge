@@ -40,6 +40,7 @@ fastapi
 sqlmap-api
 cryptography
 requests
+jwt
 beautifulsoup4
 owasp-zap-api
 
