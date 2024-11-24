@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <title>Create Pentest</title>
     <style>
         body {
@@ -12,10 +12,11 @@
             height: 100vh;
             margin: 0;
             background-color: #f5f5f7;
+            font-family: sans-serif;
         }
 
         .container {
-            text-align: center;
+            text-align: left;
             background-color: white;
             padding: 2em;
             border-radius: 8px;
@@ -66,7 +67,8 @@
 
         .button-row {
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
+            margin-top: 16px;
         }
 
         .button-row button {
@@ -91,11 +93,12 @@
         </div>
         <h2>Create pentest</h2>
         <p>Create your penetration test in one click</p>
-        <input type="text" placeholder="Name of your test" width="100px" />
-        <input type="url" placeholder="host address" width="100px" />
-        <input type="file" placeholder="vulnerability csv" width="100px" />
-        <div class="button-row">
-            <button>Cancel</button>
+        <input type="text" id=TestName placeholder="Name of your test" width="100px" />
+        <input type="url" id=Address  placeholder="host address" width="100px" />
+        <div>
+        <label for="getFile" class="btn">Vulnerability CSV</label>
+        <input type="file" id=getFile placeholder="vulnerability csv" style="display: Vuln" width="100px" />
+        <div class= "button-row">
             <button id="deploy">Deploy</button>
         </div>
     </div>
