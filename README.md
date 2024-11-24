@@ -36,31 +36,57 @@ docker run \
 Key dependencies used in this project:
 
 ### Core Dependencies
-- **openai (1.55.0+)**: OpenAI API client for vulnerability analysis
-- **playwright (1.49.0+)**: Browser automation for vulnerability testing
+- **openai (1.55.0+)**: OpenAI API client for vulnerability analysis and classification
+- **playwright (1.49.0+)**: Comprehensive browser automation framework
 - **pandas (2.2.3+)**: Data processing and CSV handling
-- **typer (0.13.1+)**: CLI interface management
+- **typer (0.13.1+)**: Modern CLI interface builder based on Python type hints
 
 ### Testing & Automation
-- **playwright**: Headless browser automation
-  - Used for XSS testing
+- **playwright (1.49.0+)**: Headless browser automation
+  - Used for XSS testing and exploitation
   - Interface vulnerability scanning
   - Screenshot capture
   - Network request monitoring
+- **pyee (12.0.0+)**: Python EventEmitter implementation for automation events
 
-### Data Processing
-- **pandas**: CSV processing and data manipulation
-- **numpy (2.1.3+)**: Numerical operations support
-- **python-dateutil (2.9.0+)**: Date handling utilities
+### Data Processing & Validation
+- **pandas (2.2.3+)**: CSV processing and data manipulation
+- **numpy (2.1.3+)**: Numerical operations and data analysis support
+- **python-dateutil (2.9.0+)**: Powerful extensions to datetime
+- **pydantic (2.10.1+)**: Data validation using Python type annotations
+- **pydantic-core (2.27.1+)**: Core functionality for Pydantic
+- **annotated-types (0.7.0+)**: Type annotation support
+- **typing-extensions (4.12.2+)**: Backported typing hints
+
+### HTTP & Networking
+- **httpx (0.27.2+)**: Modern HTTP client with async support
+- **httpcore (1.0.7+)**: HTTP transport library
+- **anyio (4.6.2+)**: Asynchronous I/O support
+- **h11 (0.14.0+)**: HTTP/1.1 protocol implementation
+- **sniffio (1.3.1+)**: Async library detection
+- **requests (2.32.3+)**: HTTP library for synchronous requests
+- **urllib3 (2.2.3+)**: HTTP client library
+- **charset-normalizer (3.4.0+)**: Character encoding detection
+- **certifi (2024.8.30+)**: Mozilla's SSL certificates
 
 ### UI & Formatting
-- **rich (13.9.4+)**: Terminal formatting and progress display
-- **tqdm (4.67.0+)**: Progress bars for long-running operations
+- **rich (13.9.4+)**: Rich text and formatting in the terminal
+- **tqdm (4.67.0+)**: Fast, extensible progress bars
+- **click (8.1.7+)**: Command line interface creation kit
+- **shellingham (1.5.4+)**: Shell detection for CLI tools
+- **pygments (2.18.0+)**: Syntax highlighting
+- **markdown-it-py (3.0.0+)**: Markdown parser
+- **mdurl (0.1.2+)**: URL utilities for markdown processing
 
-### API & Networking
-- **httpx (0.27.2+)**: HTTP client for API interactions
-- **anyio (4.6.2+)**: Asynchronous I/O support
-- **pydantic (2.10.1+)**: Data validation and settings management
+### Utility Libraries
+- **pathlib (1.0.1+)**: Object-oriented filesystem paths
+- **jiter (0.7.1+)**: Iterator utilities
+- **greenlet (3.1.1+)**: Lightweight in-process concurrent programming
+- **distro (1.9.0+)**: OS platform information
+- **six (1.16.0+)**: Python 2 and 3 compatibility
+- **pytz (2024.2+)**: Timezone calculations
+- **tzdata (2024.2+)**: Timezone database
+- **idna (3.10+)**: Internationalized Domain Names support
 
 All dependencies are automatically handled by the Docker container. If running locally, install via:
 
