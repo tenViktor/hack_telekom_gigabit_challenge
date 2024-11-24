@@ -15,6 +15,17 @@ client = OpenAI()
 df = pd.read_csv("juice-shop_vulnerabilities_2024-11-14T1526.csv")
 
 
+"""
+TODO:
+- Figure out the vulnerability type - SQL Injections, XSS, Missing Security Headers, Path Traversal
+- run the best tool (headless or a Python script)
+- Generate script (look into the vector DB)
+- Run the script (we need to get screenshots or documentations, where we cannot take them)
+- Save the output types based on the vulnerability type (logs, headers, or only the screenshots)
+- Generate steps to manually recreate based on the scripts
+- Store everything
+"""
+
 async def run_test(script_content):
     async with async_playwright() as p:
         browser = await p.chromium.launch(
