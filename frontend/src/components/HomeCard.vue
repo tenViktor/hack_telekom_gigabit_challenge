@@ -8,7 +8,7 @@ const getFile = ref(null)
 const MoveOn = () => {
   console.log('Test Name:', TestName.value)
   console.log('Address:', Address.value)
-  console.log('File:', getFile.value)
+  console.log('File:', getFile.value ? getFile.value.name : 'No file selected')
 }
 
 const handleFileChange = (event) => {
@@ -22,7 +22,7 @@ const handleFileChange = (event) => {
       <div class="tab">New</div>
       <div class="tab">History</div>
     </div>
-    <h2>Create pentest</h2>
+    <h2>Create Pentest</h2>
     <p>Create your penetration test in one click</p>
     <input 
       type="text" 
@@ -47,4 +47,14 @@ const handleFileChange = (event) => {
       <button id="deploy" @click="MoveOn">Deploy</button>
     </div>
   </div>
-</template>
+    </template>
+
+    <!-- Display User Inputs -->
+<!--    <div style="margin-top: 20px;">
+      <h3>Preview Input:</h3>
+      <p><strong>Test Name:</strong> {{ TestName }}</p>
+      <p><strong>Host Address:</strong> {{ Address }}</p>
+      <p><strong>Selected File:</strong> {{ getFile ? getFile.name : 'No file selected' }}</p>
+    </div>
+  </div>
+</template> -->
