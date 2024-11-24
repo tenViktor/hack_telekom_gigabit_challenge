@@ -19,7 +19,8 @@ RUN playwright install-deps
 # Copy the rest of the application
 COPY . .
 
-# Create volume mount point for results
+# Create volume mount points for input data and results
+VOLUME /app/data
 VOLUME /app/results
 
 # Create entrypoint script
