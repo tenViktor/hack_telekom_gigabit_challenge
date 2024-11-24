@@ -111,7 +111,11 @@ mkdir data results
 ### Running the Scanner
 
 ```bash
-docker run -v $(pwd)/results:/app/results vuln-scanner \
+# Run the scanner
+docker run \
+    -e OPENAI_API_KEY="your-api-key-here" \
+    -v $(pwd)/results:/app/results \
+    vuln-scanner \
     "http://target-url:3000" "/app/data/vulnerabilities.csv"
 ```
 
