@@ -97,13 +97,13 @@ class VulnerabilityScanner:
 
             # Display results in CLI
             if results.get("success"):
-                console.print("✅ Vulnerability CONFIRMED!", style="red bold")
+                console.print("✅ Vulnerability CONFIRMED!", style="green")
                 if results.get("evidence"):
                     console.print("\nEvidence:", style="yellow")
                     for evidence in results["evidence"]:
                         console.print(f"- {evidence}")
             else:
-                console.print("❌ Vulnerability not confirmed", style="green")
+                console.print("❌ Vulnerability not confirmed", style="red bold")
 
             if results.get("screenshots"):
                 console.print(
