@@ -1,62 +1,115 @@
-# hack_telekom_gigabit_challenge
+# Automated Vulnerability Scanner
 
-Welcome to our submission for deutsche Tekekom hackathon 2024, specifically the Gigabit challenge.
+A containerized CLI tool for automated vulnerability scanning and exploitation. The tool processes vulnerability scan results and automatically performs security testing using browser automation and specialized exploits.
 
-The data persists in data/sqlite (added in the gitignore)
-pip install -r requirements.txt
-docker-compose up --build
+## Quick Start
 
-TODO:
+````bash
+# Pull the image
+docker pull yourusername/vuln-scanner:latest
 
-## Development
+# Run the scanner
+docker run -v $(pwd)/results:/app/results yourusername/vuln-scanner \
+    "http://target-url:3000" "/app/data/vulnerabilities.csv"
 
-- create backend APIs
-  - create the fill the SQLite database
-  - create and fill the FAISS database
-    - create "standard" implementations
-    - find what tools to actually use
-  - setup the service to generate the scripts
+## Features
 
-## Documentation
+- Automated vulnerability classification based on OWASP Top 10
+- Browser automation for XSS and interface-based vulnerabilities
+- Specialized exploit runners for SQL Injection and XSS
+- Automatic screenshot capture and result logging
+- Support for standard security tool CSV outputs
+- Rich CLI interface with progress tracking
 
-- create Requirements
-- documents external dependacies
-- create the actual README
-  - setup docs
-- create the Devpost
-- create slides
+## Prerequisites
 
-## Requirements.txt
+- Docker
+- Access to the target application
+- Vulnerability scan results in CSV format
 
-pandas
-playwright
-faiss-cpu
-langchain-community
-transformers
-torch
-httpx
-sqlalchemy
-fastapi
-sqlmap-api
-cryptography
-requests
-jwt
-beautifulsoup4
-owasp-zap-api
+## Installation
 
-## Can be automated with Playwright:
+### Using Pre-built Image
 
-_Broken Access Control (testing endpoints)_
-_Identification and Authentication Failures_
-_Security Misconfiguration_
-_Vulnerable and Outdated Components (version checking)_
-_XSS Testing_
-_Some SQL Injection variants_
+```bash
+docker pull yourusername/vuln-scanner:latest
+````
 
-## Needs specialized packages
+### Building Locally
 
-_sqlmap-api (SQL Injection)_
-_cryptography (Crypto failures)_
-_requests (API testing)_
-_beautifulsoup4 (HTML parsing)_
-_owasp-zap-api (For deeper scanning)_
+```bash
+git clone <repository-url>
+cd automated-vulnerability-scanner
+docker build -t vuln-scanner .
+```
+
+## Usage
+
+### Directory Structure
+
+Create the following directories in your working directory:
+
+```bash
+mkdir data results
+```
+
+### Running the Scanner
+
+```bash
+docker run -v $(pwd)/data:/app/data -v $(pwd)/results:/app/results vuln-scanner \
+    "http://target-url:3000" "/app/data/vulnerabilities.csv"
+```
+
+### CSV Format
+
+The tool expects a CSV file with the following headers:
+
+```
+Group Name,Project Name,Tool,Scanner Name,Status,Vulnerability,Details,Additional Info,Severity,CVE,CWE,Other Identifiers,Detected At,Location,Activity,Comments,Full Path,CVSS Vectors,Dismissal Reason
+```
+
+Required fields:
+
+- `Vulnerability`: The type/name of the vulnerability
+- `Details`: Description or additional information
+- `Severity`: Vulnerability severity level
+
+Other fields are optional but will be included in the results if present.
+
+### Output
+
+Results are stored in the mounted `results` directory:
+
+```
+results/
+├── YYYYMMDD_HHMMSS_vulnerability_name.png    # Screenshots
+├── YYYYMMDD_HHMMSS_vulnerability_name.json   # Test results
+└── YYYYMMDD_HHMMSS_vulnerability_name.txt    # Test details
+```
+
+## Supported Vulnerability Types
+
+Currently supports automated testing for:
+
+- SQL Injection
+- Cross-Site Scripting (XSS)
+- Authentication Testing
+- Basic Security Misconfigurations
+
+Other vulnerability types will be logged but may require manual verification.
+
+## Network Configuration
+
+When testing local applications, use appropriate Docker networking:
+
+```bash
+# For host network
+docker run --network host ...
+
+# For Docker Compose networks
+docker run --network your_network_name ...
+```
+
+## Security Notice
+
+This tool is for educational and authorized testing purposes only. Always obtain proper authorization before testing any systems or applications. The authors are not responsible for any misuse or damage caused by this tool.
