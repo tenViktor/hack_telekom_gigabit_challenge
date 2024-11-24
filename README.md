@@ -114,7 +114,7 @@ mkdir data results
 # Run the scanner
 docker run \
     -e OPENAI_API_KEY="your-api-key-here" \
-    -v /path/to/your/csv:/app/data \
+    -v $(pwd)/data:/app/data \
     -v $(pwd)/results:/app/results \
     vuln-scanner \
     "http://target-url:3000" "/app/data/vulnerabilities.csv"
