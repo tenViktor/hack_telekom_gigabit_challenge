@@ -4,7 +4,7 @@ A containerized CLI tool for automated vulnerability scanning and exploitation. 
 
 ## Quick Start
 
-````bash
+```bash
 # Pull the image
 docker pull yourusername/vuln-scanner:latest
 
@@ -15,6 +15,7 @@ docker run \
     -v $(pwd)/results:/app/results \
     vuln-scanner \
     "http://target-url:3000" "/app/data/vulnerabilities.csv"
+```
 
 ## Features
 
@@ -36,12 +37,14 @@ docker run \
 Key dependencies used in this project:
 
 ### Core Dependencies
+
 - **openai (1.55.0+)**: OpenAI API client for vulnerability analysis and classification
 - **playwright (1.49.0+)**: Comprehensive browser automation framework
 - **pandas (2.2.3+)**: Data processing and CSV handling
 - **typer (0.13.1+)**: Modern CLI interface builder based on Python type hints
 
 ### Testing & Automation
+
 - **playwright (1.49.0+)**: Headless browser automation
   - Used for XSS testing and exploitation
   - Interface vulnerability scanning
@@ -50,6 +53,7 @@ Key dependencies used in this project:
 - **pyee (12.0.0+)**: Python EventEmitter implementation for automation events
 
 ### Data Processing & Validation
+
 - **pandas (2.2.3+)**: CSV processing and data manipulation
 - **numpy (2.1.3+)**: Numerical operations and data analysis support
 - **python-dateutil (2.9.0+)**: Powerful extensions to datetime
@@ -59,6 +63,7 @@ Key dependencies used in this project:
 - **typing-extensions (4.12.2+)**: Backported typing hints
 
 ### HTTP & Networking
+
 - **httpx (0.27.2+)**: Modern HTTP client with async support
 - **httpcore (1.0.7+)**: HTTP transport library
 - **anyio (4.6.2+)**: Asynchronous I/O support
@@ -70,6 +75,7 @@ Key dependencies used in this project:
 - **certifi (2024.8.30+)**: Mozilla's SSL certificates
 
 ### UI & Formatting
+
 - **rich (13.9.4+)**: Rich text and formatting in the terminal
 - **tqdm (4.67.0+)**: Fast, extensible progress bars
 - **click (8.1.7+)**: Command line interface creation kit
@@ -79,6 +85,7 @@ Key dependencies used in this project:
 - **mdurl (0.1.2+)**: URL utilities for markdown processing
 
 ### Utility Libraries
+
 - **pathlib (1.0.1+)**: Object-oriented filesystem paths
 - **jiter (0.7.1+)**: Iterator utilities
 - **greenlet (3.1.1+)**: Lightweight in-process concurrent programming
@@ -96,14 +103,14 @@ All dependencies are automatically handled by the Docker container. If running l
 
 ```bash
 docker pull yourusername/vuln-scanner:latest
-````
+```
 
 ### Building Locally
 
 ```bash
 git clone <repository-url>
 cd automated-vulnerability-scanner
-docker build -t vuln-scanner .
+docker build . -t vuln-scanner
 ```
 
 ## Usage
