@@ -9,7 +9,11 @@ A containerized CLI tool for automated vulnerability scanning and exploitation. 
 docker pull yourusername/vuln-scanner:latest
 
 # Run the scanner
-docker run -v $(pwd)/results:/app/results yourusername/vuln-scanner \
+docker run \
+    -e OPENAI_API_KEY="your-api-key-here" \
+    -v $(pwd)/data:/app/data \
+    -v $(pwd)/results:/app/results \
+    vuln-scanner \
     "http://target-url:3000" "/app/data/vulnerabilities.csv"
 
 ## Features
@@ -56,7 +60,7 @@ mkdir data results
 ### Running the Scanner
 
 ```bash
-docker run -v $(pwd)/data:/app/data -v $(pwd)/results:/app/results vuln-scanner \
+docker run -v $(pwd)/results:/app/results vuln-scanner \
     "http://target-url:3000" "/app/data/vulnerabilities.csv"
 ```
 

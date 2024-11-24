@@ -22,4 +22,13 @@ COPY . .
 # Create volume mount point for results
 VOLUME /app/results
 
-ENTRYPOINT ["python", "main.py"]
+# Create entrypoint script
+RUN echo '#!/bin/sh\n\
+  if [ -z "$OPENAI_API_KEY" ]; then\n\
+  echo "Error: OPENAI_API_KEY environment variable is not set"\n\
+  exit 1\n\
+  fi\n\
+  exec python main.py "$@"' > /app/entrypoint.sh && \
+  chmod +x /app/entrypoint.sh
+
+ENTRYPOINT ["/app/entrypoint.sh"]
