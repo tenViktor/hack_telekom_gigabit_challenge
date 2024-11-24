@@ -2,6 +2,7 @@ from openai import OpenAI
 from openai.types.chat import ChatCompletionMessageParam
 from pathlib import Path
 import os
+import re
 from typing import List
 
 
@@ -12,6 +13,16 @@ class ScriptGenerator:
             raise ValueError("OPENAI_API_KEY environment variable is not set")
         self.client = OpenAI(api_key=api_key)
         self.results_dir = results_dir
+
+    def validate_generated_script(self, script: str) -> bool:
+        """Validate generated script meets requirements"""
+        required_patterns = [
+            r"results\[\"steps_to_reproduce\"\]\.append",
+            r"results\[\"screenshots\"\]\.append",
+            r"results\[\"evidence\"\]\.append",
+            r"await take_screenshot\(",
+        ]
+        return all(re.search(pattern, script) for pattern in required_patterns)
 
     async def generate_test_script(
         self, vulnerability: str, details: str, vuln_type: str
@@ -295,9 +306,25 @@ End the script with:
         ]
 
         response = self.client.chat.completions.create(
-            model="gpt-4", messages=messages, temperature=0.7
+            model="gpt-4",
+            messages=messages,
+            temperature=0.2,  # Lower temperature for more focused outputs
+            presence_penalty=0.1,  # Slight penalty to avoid repetition
+            frequency_penalty=0.1,  # Slight penalty to encourage variety
         )
         content = response.choices[0].message.content
         if content is None:
             raise ValueError("OpenAI API returned no content")
         return content
+
+    async def generate_with_retry(self, *args, max_retries=3) -> str:
+        for attempt in range(max_retries):
+            try:
+                script = await self.generate_test_script(*args)
+                if self.validate_generated_script(script):
+                    return script
+            except Exception:
+                if attempt == max_retries - 1:
+                    raise
+                continue
+        raise ValueError("Failed to generate valid script")
