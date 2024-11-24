@@ -31,6 +31,39 @@ docker run \
 - Access to the target application
 - Vulnerability scan results in CSV format
 
+## Dependencies
+
+Key dependencies used in this project:
+
+### Core Dependencies
+- **openai (1.55.0+)**: OpenAI API client for vulnerability analysis
+- **playwright (1.49.0+)**: Browser automation for vulnerability testing
+- **pandas (2.2.3+)**: Data processing and CSV handling
+- **typer (0.13.1+)**: CLI interface management
+
+### Testing & Automation
+- **playwright**: Headless browser automation
+  - Used for XSS testing
+  - Interface vulnerability scanning
+  - Screenshot capture
+  - Network request monitoring
+
+### Data Processing
+- **pandas**: CSV processing and data manipulation
+- **numpy (2.1.3+)**: Numerical operations support
+- **python-dateutil (2.9.0+)**: Date handling utilities
+
+### UI & Formatting
+- **rich (13.9.4+)**: Terminal formatting and progress display
+- **tqdm (4.67.0+)**: Progress bars for long-running operations
+
+### API & Networking
+- **httpx (0.27.2+)**: HTTP client for API interactions
+- **anyio (4.6.2+)**: Asynchronous I/O support
+- **pydantic (2.10.1+)**: Data validation and settings management
+
+All dependencies are automatically handled by the Docker container. If running locally, install via:
+
 ## Installation
 
 ### Using Pre-built Image
