@@ -1,9 +1,87 @@
-@import '../node_modules/@telekom/design-tokens/dist/css/design-tokens.all.css';
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body{
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #f5f5f7;
   font-family: sans-serif;
+}
+
+.container {
+  text-align: left;
+  background-color: white;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab {
+  padding: 10px 20px;
+  background-color: #f1f3f5;
+  border-radius: 5px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #000000; /* Explicit text color for tabs */
+}
+
+.tab:first-child {
+  color: #d63384; /* Magenta color for the "New" tab */
+}
+
+#deploy {
+  background-color: #d63384;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#deploy:hover {
+  background-color: #c3175b;
+}
+
+input {
+  width: 93%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+}
+
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* Style for the file input label */
+.btn {
+  background-color: #f1f3f5;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-block;
+  color: #000000; /* Explicit text color for the label */
+}
+
+h2, p {
+  color: #000000; /* Explicit text color for headings and paragraphs */
+}
+
+/* Style for the file input */
+#getFile {
+  color: #000000; /* Explicit text color for file input */
 }
