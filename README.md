@@ -2,9 +2,23 @@
 
 Welcome to our submission for deutsche Tekekom hackathon 2024, specifically the Gigabit challenge.
 
-# The Challenge
+The data persists in data/sqlite (added in the gitignore)
+pip install -r requirements.txt
+docker-compose up --build
 
-Creating a system, that automatically detects and recreates potential vulnerabilities from input code.
-![image](https://github.com/user-attachments/assets/68b6c1a9-2f69-4928-88f4-979e8601477a)
+TODO:
 
-The data persists in
+## Development
+
+- create backend APIs
+  - create the fill the SQLite database
+  - create and fill the FAISS database
+  - setup the service to generate
+
+## Documentation
+
+- create Requirements
+- documents external dependacies
+- create the actual README
+- create the Devpost
+- create slides
