@@ -73,7 +73,89 @@ class VulnerabilityScanner:
         vuln_type, can_use_playwright = classify_vulnerability(vulnerability, details)
         console.print(f"\nClassified as: {vuln_type.value}", style="blue")
 
-        results = None
+        all_results = []
+        MAX_ATTEMPTS = 3
+
+        for attempt in range(1, MAX_ATTEMPTS + 1):
+            console.print(
+                f"\nStarting attempt {attempt}/{MAX_ATTEMPTS}", style="yellow"
+            )
+            try:
+                if can_use_playwright:
+                    console.print(
+                        f"Generating and running Playwright test (Attempt {attempt})...",
+                        style="yellow",
+                    )
+                    script = await self.script_generator.generate_test_script(
+                        vulnerability, details, vuln_type.value, attempt
+                    )
+                    results = await self.run_generated_script(script, vulnerability)
+                    results["attempt"] = attempt
+                    all_results.append(results)
+
+                    # If we successfully find a vulnerability, we can optionally break early
+                    if results.get("success"):
+                        console.print(
+                            f"✅ Vulnerability confirmed on attempt {attempt}!",
+                            style="green",
+                        )
+                        break
+                else:
+                    console.print("Manual testing required", style="red")
+                    results = {
+                        "success": False,
+                        "status": "manual_testing_required",
+                        "reason": "No automated test available",
+                        "attempt": attempt,
+                    }
+                    all_results.append(results)
+                    break
+
+            except Exception as e:
+                console.print(
+                    f"Error during test execution (Attempt {attempt}): {str(e)}",
+                    style="red",
+                )
+                all_results.append(
+                    {"status": "error", "error": str(e), "attempt": attempt}
+                )
+
+        # Combine results from all attempts
+        combined_results = {
+            "success": any(r.get("success", False) for r in all_results),
+            "attempts": all_results,
+            "total_attempts": len(all_results),
+            "evidence": [
+                item for r in all_results if r.get("evidence") for item in r["evidence"]
+            ],
+            "screenshots": [
+                item
+                for r in all_results
+                if r.get("screenshots")
+                for item in r["screenshots"]
+            ],
+        }
+
+        # Save combined results
+        await self.save_results(vulnerability, combined_results)
+
+        # Display final results
+        if combined_results["success"]:
+            console.print("\n✅ Vulnerability CONFIRMED!", style="green bold")
+            if combined_results["evidence"]:
+                console.print("\nEvidence found:", style="yellow")
+                for evidence in combined_results["evidence"]:
+                    console.print(f"- {evidence}")
+        else:
+            console.print(
+                "\n❌ Vulnerability not confirmed after all attempts", style="red bold"
+            )
+
+        if combined_results["screenshots"]:
+            console.print(
+                f"\nTotal screenshots saved: {len(combined_results['screenshots'])}",
+                style="blue",
+            )
 
         try:
             if can_use_playwright:

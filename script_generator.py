@@ -25,7 +25,7 @@ class ScriptGenerator:
         return all(re.search(pattern, script) for pattern in required_patterns)
 
     async def generate_test_script(
-        self, vulnerability: str, details: str, vuln_type: str
+        self, vulnerability: str, details: str, vuln_type: str, attempt: int = 1
     ) -> str:
         # Base template that includes proper screenshot handling and results structure
         base_template = """
@@ -270,6 +270,17 @@ Common XSS payloads:
         }
 
         vuln_info = vuln_specific_prompts.get(vuln_type, {"context": "", "example": ""})
+
+        # Add attempt-specific context to make each try different
+        attempt_context = f"""
+        This is attempt {attempt} of 3. Please generate a different strategy:
+        Attempt 1: Focus on basic/common exploit patterns
+        Attempt 2: Use more sophisticated/complex payloads
+        Attempt 3: Try edge cases and unusual input combinations
+        
+        Current attempt: {attempt}
+        """
+        vuln_info["context"] = attempt_context + vuln_info["context"]
 
         messages: List[ChatCompletionMessageParam] = [
             {
